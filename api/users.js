@@ -6,7 +6,7 @@ const { getUserByUsername, createUser } = require('../db')
 usersRouter.use((req, res, next) => {
   console.log("A request is being made to /users");
 
-  next(); // THIS IS DIFFERENT
+  next(); 
 });
 
 const { getAllUsers } = require('../db');
@@ -38,12 +38,12 @@ usersRouter.post('/login', async (req, res, next) => {
     if (user && user.password == password) {
       const token = jwt.sign({ 
         id: user.id, 
-        username: user.username
+        username
       }, process.env.JWT_SECRET, {
         expiresIn: '1w'
       });
 
-      res.send({ message: "you're logged in!" , token: token});
+      res.send({ message: "you're logged in!" , token});
     } else {
       next({ 
         name: 'IncorrectCredentialsError', 
